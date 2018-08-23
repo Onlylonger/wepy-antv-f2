@@ -1,0 +1,88 @@
+<!-- antv 蚂蚁金服 移动端 f2-canvas 适配组件 -->
+<template>
+  <canvas wx:if="{{canvasId}}" style="width: {{width}}rpx; height: {{height}}rpx" class="f2-canvas" canvas-id="{{canvasId}}"
+    @touchstart="touchStart" @touchmove="touchMove" @touchend="touchEnd" @longtap="press">
+  </canvas>
+</template>
+<script>
+import wepy from 'wepy'
+import Renderer from '@/utils/renderer'
+
+const sysInfo = wepy.getSystemInfoSync()
+const radio = sysInfo.windowWidth / 750
+
+export default class F2Canvas extends wepy.component {
+  props = {
+    canvasId: String,
+    width: String,
+    height: String,
+    opts: Object
+  }
+  canvas = null
+  onLoad() {
+    if (!this.opts) {
+      console.warn(
+        '组件需绑定 opts 变量，例：<ff-canvas id="mychart-dom-bar" ' +
+          'canvas-id="mychart-bar" opts="{{ opts }}"></ff-canvas>'
+      )
+      return
+    }
+
+    if (!this.opts.lazyLoad) {
+      this.init()
+    }
+  }
+  init(callback) {
+    const version = wx.version.version.split('.').map(n => parseInt(n, 10))
+    const isValid =
+      version[0] > 1 ||
+      (version[0] === 1 && version[1] > 9) ||
+      (version[0] === 1 && version[1] === 9 && version[2] >= 91)
+    if (!isValid) {
+      console.error('微信基础库版本过低，需大于等于 1.9.91。')
+      return
+    }
+    const ctx = wx.createCanvasContext(this.canvasId, this)
+    this.canvas = new Renderer(ctx)
+
+    this.chart = this.opts.onInit(
+      this.canvas,
+      this.width * radio,
+      this.height * radio
+    )
+  }
+
+  methods = {
+    handleError(e) {
+      console.log(e)
+    },
+    touchStart(e) {
+      if (this.canvas) {
+        this.canvas.emitEvent('touchstart', [e])
+      }
+    },
+    touchMove(e) {
+      if (this.canvas) {
+        this.canvas.emitEvent('touchmove', [e])
+      }
+    },
+    touchEnd(e) {
+      if (this.canvas) {
+        this.canvas.emitEvent('touchend', [e])
+      }
+    },
+    press(e) {
+      if (this.canvas) {
+        this.canvas.emitEvent('press', [e])
+      }
+    }
+  }
+}
+</script>
+
+<style lang="scss">
+.f2-canvas {
+  width: 100%;
+  height: 100%;
+}
+</style>

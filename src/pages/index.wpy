@@ -1,0 +1,72 @@
+<!-- 测试antv -->
+<template>
+  <view class="demo">
+    <F2Canvas :opts="opts" canvasId="column" width="750" height="300"></F2Canvas>
+  </view>
+</template>
+<script>
+import wepy from 'wepy'
+import F2Canvas from '@/components/F2Canvas'
+import F2 from '@/utils/adapterF2'
+
+let chart = null
+
+const initChart = (canvas, width, height) => {
+  console.log(canvas)
+  const data = [
+    { year: '1951 年', sales: 38 },
+    { year: '1952 年', sales: 52 },
+    { year: '1956 年', sales: 61 },
+    { year: '1957 年', sales: 145 },
+    { year: '1958 年', sales: 48 },
+    { year: '1959 年', sales: 38 },
+    { year: '1960 年', sales: 38 },
+    { year: '1962 年', sales: 38 }
+  ]
+  chart = new F2.Chart({
+    el: canvas,
+    width,
+    height
+  })
+
+  chart.source(data, {
+    sales: {
+      tickCount: 5
+    }
+  })
+  chart.tooltip({
+    showItemMarker: false,
+    onShow(ev) {
+      const { items } = ev
+      items[0].name = null
+      items[0].name = items[0].title
+      items[0].value = '¥ ' + items[0].value
+    }
+  })
+  chart.interval().position('year*sales')
+  chart.render()
+  return chart
+}
+
+export default class Demo extends wepy.page {
+  config = {}
+  components = {
+    F2Canvas
+  }
+  props = {}
+  data = {
+    opts: {
+      onInit: initChart
+    }
+  }
+  onLoad() {}
+  methods = {}
+}
+</script>
+
+<style lang="scss">
+.demo {
+  width: 100%;
+  height: 400rpx;
+}
+</style>
