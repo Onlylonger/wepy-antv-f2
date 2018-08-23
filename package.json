@@ -4,7 +4,7 @@
   "description": "A WePY project",
   "main": "dist/app.js",
   "scripts": {
-    "dev": "wepy build --watch",
+    "dev": "rm -rf dist && wepy build --watch",
     "build": "cross-env NODE_ENV=production wepy build --no-cache",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
