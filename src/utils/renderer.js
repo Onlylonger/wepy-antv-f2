@@ -1,4 +1,4 @@
-import EventEmitter from '@/libs/EventEmitter.min'
+import EventEmitter from 'wolfy87-eventemitter'
 
 const CAPITALIZED_ATTRS_MAP = {
   fontSize: 'FontSize',

@@ -10,6 +10,8 @@ import F2Canvas from '@/components/F2Canvas'
 import F2 from '@/utils/adapterF2'
 
 let chart = null
+const sysInfo = wepy.getSystemInfoSync()
+console.log(sysInfo)
 
 const initChart = (canvas, width, height) => {
   console.log(canvas)
@@ -26,7 +28,8 @@ const initChart = (canvas, width, height) => {
   chart = new F2.Chart({
     el: canvas,
     width,
-    height
+    height,
+    pixelRatio: sysInfo.pixelRatio
   })
 
   chart.source(data, {

@@ -11,7 +11,8 @@
   "author": "王世隆 <547463736@qq.com>",
   "license": "MIT",
   "dependencies": {
-    "wepy": "^1.6.0"
+    "wepy": "^1.6.0",
+    "wolfy87-eventemitter": "^5.2.5"
   },
   "devDependencies": {
     "babel-eslint": "^7.2.1",
