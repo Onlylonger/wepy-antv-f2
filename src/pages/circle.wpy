@@ -20,13 +20,14 @@ const initChart = (canvas, width, height) => {
   const data = [
     {
       x: '1',
-      y: 85
+      y: 0
     }
   ]
   // 创建渐变
   const grd = canvas.ctx.createLinearGradient(0, 0, 0, height)
-  grd.addColorStop(0, '#FB3F7C')
-  grd.addColorStop(1, 'white')
+  grd.addColorStop(0, '#b182fb')
+  grd.addColorStop(0.5, '#e073c4')
+  grd.addColorStop(1, '#ff1c6d')
 
   chart.source(data, {
     y: {
@@ -51,25 +52,49 @@ const initChart = (canvas, width, height) => {
     }
   })
   chart.guide().text({
-    position: ['50%', '50%'],
-    content: '85%',
+    position: ['48%', '50%'],
+    content: '85',
     style: {
-      fontSize: 24,
-      fill: '#1890FF'
+      fontWeight: 'bold',
+      fontSize: 50,
+      fill: '#3A3A3A'
+    }
+  })
+  chart.guide().text({
+    position: ['50%', '50%'],
+    content: '分',
+    offsetX: 30,
+    offsetY: -20,
+    style: {
+      fontSize: 11,
+      fill: '#3A3A3A'
     }
   })
   chart
     .interval()
     .position('x*y')
-    .size(20)
+    .size(10)
     .color(grd)
-    .animate({
-      appear: {
-        duration: 3000,
-        easing: 'cubicIn'
-      }
+  chart
+    .point()
+    .position('x*y')
+    .size(12)
+    .color('#FFEBF2')
+    .style({
+      lineWidth: 6,
+      fill: '#FB3F7C',
+      stroke: '#FFEBF2'
     })
-  chart.render()
+  const loop = () => {
+    if (data[0].y < 100) {
+      setTimeout(() => {
+        data[0].y = data[0].y + 1
+        chart.changeData(data)
+        loop()
+      }, 16)
+    }
+  }
+  loop()
   return chart
 }
 
