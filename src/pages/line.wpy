@@ -9,6 +9,7 @@ import F2 from '@/utils/adapterF2'
 
 let chart = null
 const sysInfo = wepy.getSystemInfoSync()
+const radio = sysInfo.windowHeight / 750
 
 const now = Date.now()
 const unit = 1000 * 60 * 60 * 24
@@ -54,6 +55,10 @@ const initChart = (canvas, width, height) => {
     pixelRatio: sysInfo.pixelRatio
   })
 
+  const grd = canvas.ctx.createLinearGradient(0, 0, 0, height)
+  grd.addColorStop(0, '#FB3F7C')
+  grd.addColorStop(1, 'white')
+
   chart.source(data, {
     time: {
       type: 'timeCat',
@@ -84,22 +89,42 @@ const initChart = (canvas, width, height) => {
   //     return textCfg
   //   }
   // })
-  chart.tooltip({
-    showCrosshairs: true,
-    onShow: function onShow(ev) {
-      var items = ev.items
-
-      items[0].name = items[0].title
-    }
-  })
   // chart.guide().tag({
   //   position: [6, 2800],
   //   content: '最高点',
   //   offsetY: -5,
   //   direct: 'tl'
   // })
-  chart.area().position('time*score')
-  chart.line().position('time*score')
+  chart
+    .area()
+    .position('time*score')
+    .color(grd)
+  chart
+    .line()
+    .shape('dash')
+    .size(1)
+    .color('#FB3F7C')
+    .position('time*score')
+  data.forEach((v, i) => {
+    chart.guide().tag({
+      position: [i, v.score],
+      content: `${v.score}分`,
+      offsetY: -15,
+      direct: 'tc',
+      background: {
+        radius: 10,
+        fill: '#FB3F7C'
+      },
+      withPoint: true,
+      pointStyle: {
+        fill: '#FB3F7C', // 填充颜色
+        r: 8, // 半径
+        lineWidth: 4, // 线的边框
+        stroke: '#FFDFE9' // 线的描边
+      } // 点的样式
+    })
+  })
+
   chart.render()
   return chart
 }
