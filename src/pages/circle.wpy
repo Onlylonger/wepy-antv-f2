@@ -1,0 +1,92 @@
+<!-- 圆环 -->
+<template>
+  <F2Canvas :opts="opts" canvasId="circle" width="750" height="400"></F2Canvas>
+</template>
+<script>
+import wepy from 'wepy'
+import F2Canvas from '@/components/F2Canvas'
+import F2 from '@/utils/adapterF2'
+
+let chart = null
+const sysInfo = wepy.getSystemInfoSync()
+
+const initChart = (canvas, width, height) => {
+  chart = new F2.Chart({
+    el: canvas,
+    width,
+    height,
+    pixelRatio: sysInfo.pixelRatio
+  })
+  const data = [
+    {
+      x: '1',
+      y: 85
+    }
+  ]
+  // 创建渐变
+  const grd = canvas.ctx.createLinearGradient(0, 0, 0, height)
+  grd.addColorStop(0, '#FB3F7C')
+  grd.addColorStop(1, 'white')
+
+  chart.source(data, {
+    y: {
+      max: 100,
+      min: 0
+    }
+  })
+  chart.axis(false)
+  chart.tooltip(false)
+  chart.coord('polar', {
+    transposed: true,
+    innerRadius: 0.9,
+    radius: 1
+  })
+  chart.guide().arc({
+    start: [0, 0],
+    end: [1, 99.98],
+    top: false,
+    style: {
+      lineWidth: 10,
+      stroke: '#FFEBF2'
+    }
+  })
+  chart.guide().text({
+    position: ['50%', '50%'],
+    content: '85%',
+    style: {
+      fontSize: 24,
+      fill: '#1890FF'
+    }
+  })
+  chart
+    .interval()
+    .position('x*y')
+    .size(20)
+    .color(grd)
+    .animate({
+      appear: {
+        duration: 3000,
+        easing: 'cubicIn'
+      }
+    })
+  chart.render()
+  return chart
+}
+
+export default class Circle extends wepy.page {
+  config = {}
+  components = {
+    F2Canvas
+  }
+  data = {
+    opts: {
+      onInit: initChart
+    }
+  }
+  onLoad() {}
+  methods = {}
+}
+</script>
+
+<style lang="scss">
+</style>

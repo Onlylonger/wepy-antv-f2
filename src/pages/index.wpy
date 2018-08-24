@@ -2,6 +2,7 @@
 <template>
   <view class="index">
     <navigator class="index__nav" url="/pages/line" hover-class="none">折线图</navigator>
+    <navigator class="index__nav" url="/pages/circle" hover-class="none">圆环图</navigator>
   </view>
 </template>
 <script>
