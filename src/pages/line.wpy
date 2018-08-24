@@ -98,6 +98,11 @@ const initChart = (canvas, width, height) => {
   })
   // 坐标轴 虚线
   chart.axis('score', {
+    label: (text, index, total) => {
+      return {
+        fill: '#3A3A3A'
+      }
+    },
     grid: (text, index, total) => {
       if (text === 0) {
         return {
