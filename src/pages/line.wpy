@@ -1,0 +1,123 @@
+<!-- 折线图 -->
+<template>
+  <F2Canvas :opts="opts" canvasId="column" width="750" height="400"></F2Canvas>
+</template>
+<script>
+import wepy from 'wepy'
+import F2Canvas from '@/components/F2Canvas'
+import F2 from '@/utils/adapterF2'
+
+let chart = null
+const sysInfo = wepy.getSystemInfoSync()
+
+const now = Date.now()
+const unit = 1000 * 60 * 60 * 24
+
+const initChart = (canvas, width, height) => {
+  var data = [
+    {
+      score: 0
+    },
+    {
+      score: 30
+    },
+    {
+      score: 60
+    },
+    {
+      score: 50
+    },
+    {
+      score: 45
+    },
+    {
+      score: 66
+    },
+    {
+      score: 88
+    },
+    {
+      score: 90
+    },
+    {
+      score: 92
+    }
+  ]
+  const len = data.length
+  data.forEach((v, i) => {
+    v.time = now - (len - i - 1) * unit
+  })
+  chart = new F2.Chart({
+    el: canvas,
+    width,
+    height,
+    pixelRatio: sysInfo.pixelRatio
+  })
+
+  chart.source(data, {
+    time: {
+      type: 'timeCat',
+      formatter(value, index) {
+        const date = new Date(value)
+        const nowDate = new Date()
+        if (date.getDate() === nowDate.getDate()) return '今天'
+        else return date.getDate()
+      },
+      tickCount: data.length
+    },
+    score: {
+      tickInterval: 20,
+      max: 100,
+      nice: false,
+      min: 0
+    }
+  })
+  // chart.axis('time', {
+  //   label: function label(text, index, total) {
+  //     var textCfg = {}
+  //     if (index === 0) {
+  //       textCfg.textAlign = 'left'
+  //     }
+  //     if (index === total - 1) {
+  //       textCfg.textAlign = 'right'
+  //     }
+  //     return textCfg
+  //   }
+  // })
+  chart.tooltip({
+    showCrosshairs: true,
+    onShow: function onShow(ev) {
+      var items = ev.items
+
+      items[0].name = items[0].title
+    }
+  })
+  // chart.guide().tag({
+  //   position: [6, 2800],
+  //   content: '最高点',
+  //   offsetY: -5,
+  //   direct: 'tl'
+  // })
+  chart.area().position('time*score')
+  chart.line().position('time*score')
+  chart.render()
+  return chart
+}
+
+export default class Line extends wepy.page {
+  config = {}
+  components = {
+    F2Canvas
+  }
+  data = {
+    opts: {
+      onInit: initChart
+    }
+  }
+  onLoad() {}
+  methods = {}
+}
+</script>
+
+<style lang="scss">
+</style>

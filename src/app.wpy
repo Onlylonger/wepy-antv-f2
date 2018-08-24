@@ -6,9 +6,7 @@ import wepy from 'wepy'
 
 export default class extends wepy.app {
   config = {
-    pages: [
-      'pages/index'
-    ],
+    pages: ['pages/index', 'pages/line'],
     window: {
       backgroundTextStyle: 'light',
       navigationBarBackgroundColor: '#fff',

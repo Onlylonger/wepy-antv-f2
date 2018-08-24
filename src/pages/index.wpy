@@ -1,75 +1,37 @@
 <!-- 测试antv -->
 <template>
-  <view class="demo">
-    <F2Canvas :opts="opts" canvasId="column" width="750" height="300"></F2Canvas>
+  <view class="index">
+    <navigator class="index__nav" url="/pages/line" hover-class="none">折线图</navigator>
   </view>
 </template>
 <script>
 import wepy from 'wepy'
-import F2Canvas from '@/components/F2Canvas'
-import F2 from '@/utils/adapterF2'
 
-let chart = null
-const sysInfo = wepy.getSystemInfoSync()
-console.log(sysInfo)
-
-const initChart = (canvas, width, height) => {
-  console.log(canvas)
-  const data = [
-    { year: '1951 年', sales: 38 },
-    { year: '1952 年', sales: 52 },
-    { year: '1956 年', sales: 61 },
-    { year: '1957 年', sales: 145 },
-    { year: '1958 年', sales: 48 },
-    { year: '1959 年', sales: 38 },
-    { year: '1960 年', sales: 38 },
-    { year: '1962 年', sales: 38 }
-  ]
-  chart = new F2.Chart({
-    el: canvas,
-    width,
-    height,
-    pixelRatio: sysInfo.pixelRatio
-  })
-
-  chart.source(data, {
-    sales: {
-      tickCount: 5
-    }
-  })
-  chart.tooltip({
-    showItemMarker: false,
-    onShow(ev) {
-      const { items } = ev
-      items[0].name = null
-      items[0].name = items[0].title
-      items[0].value = '¥ ' + items[0].value
-    }
-  })
-  chart.interval().position('year*sales')
-  chart.render()
-  return chart
-}
-
-export default class Demo extends wepy.page {
+export default class Index extends wepy.page {
   config = {}
-  components = {
-    F2Canvas
-  }
+  components = {}
   props = {}
-  data = {
-    opts: {
-      onInit: initChart
-    }
-  }
+  data = {}
   onLoad() {}
   methods = {}
 }
 </script>
 
 <style lang="scss">
-.demo {
+.index {
   width: 100%;
-  height: 400rpx;
+  &__nav {
+    width: 690rpx;
+    height: 100rpx;
+    margin: 10rpx auto;
+    line-height: 100rpx;
+    text-align: center;
+    background: #fb3f7c;
+    box-shadow: 0 2rpx 20rpx 0 rgba(255, 187, 209, 0.5);
+    border-radius: 100rpx;
+    font-size: 30rpx;
+    color: #ffffff;
+    letter-spacing: 0;
+  }
 }
 </style>
