@@ -1,6 +1,6 @@
 {
   "name": "wepy-antv-f2",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "description": "wepy antv f2 components",
   "main": "dist/app.js",
   "scripts": {
