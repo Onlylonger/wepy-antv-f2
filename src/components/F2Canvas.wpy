@@ -8,7 +8,7 @@
 import wepy from 'wepy'
 import Renderer from 'mini-program-utils/dist/f2/renderer'
 
-const sysInfo = wx.getSystemInfoSync()
+const sysInfo = wepy.getSystemInfoSync()
 const radio = sysInfo.windowWidth / 750
 
 export default class F2Canvas extends wepy.component {
