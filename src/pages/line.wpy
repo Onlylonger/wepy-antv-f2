@@ -5,7 +5,7 @@
 <script>
 import wepy from 'wepy'
 import F2Canvas from '@/components/F2Canvas'
-import F2 from '@/utils/adapterF2'
+import F2 from 'mini-program-utils/dist/f2/adapterF2'
 
 let chart = null
 const sysInfo = wepy.getSystemInfoSync()

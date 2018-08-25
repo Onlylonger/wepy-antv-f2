@@ -6,7 +6,7 @@
 </template>
 <script>
 import wepy from 'wepy'
-import Renderer from '@/utils/renderer'
+import Renderer from 'mini-program-utils/dist/f2/renderer'
 
 const sysInfo = wepy.getSystemInfoSync()
 const radio = sysInfo.windowWidth / 750
