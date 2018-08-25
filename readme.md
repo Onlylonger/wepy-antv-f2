@@ -14,6 +14,7 @@
 
 ```js
 import F2Canvas from 'wepy-antv-f2/F2Canvas';
+// antv f2 抽离到 mini-program-utils, 都经过babel 编译
 import F2 from 'mini-program-utils/dist/f2/adapterF2';
 
 const sysInfo = wepy.getSystemInfoSync();
