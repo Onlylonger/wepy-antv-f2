@@ -16,6 +16,9 @@
 import F2Canvas from 'wepy-antv-f2/F2Canvas';
 import F2 from 'mini-program-utils/dist/f2/adapterF2';
 
+const sysInfo = wepy.getSystemInfoSync();
+let chart = null;
+
 const now = Date.now();
 const unit = 1000 * 60 * 60 * 24;
 
