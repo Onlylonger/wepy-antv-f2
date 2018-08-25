@@ -4,9 +4,14 @@
 
 ## 使用
 
+```sh
+npm install wepy-antv-f2
+```
+
 > template
 
 ```html
+<!-- 这里的长宽属性 是按照 iPhone6 作为设计稿标准(宽度750px) -->
 <F2Canvas :opts="opts" canvasId="circle" width="750" height="400"></F2Canvas>
 ```
 
